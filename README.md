@@ -22,22 +22,77 @@ Configure an on-premises Active Directory within Azure VMs using my previous pro
 
 <h2>High-Level Deployment and Configuration Steps</h2>
 
-1) Setup an Account Lockout within your Active Directory Infrastructure   
-    - Configure Account Lockout Threshold in Group Policy
-    - Lock yourself out of a user account to ensure the policy works (fun!)
-2) Enable and Disable Accounts
-    - unlock user account
-    - observe ability to enable, disable, and reset passwords for users within Active Directory Users & Computers
-3) Observe Logs within Event Viewer
-    - Observe the logs on the client Machine
+1) A-Record Exercise
+
+2) Local DNS Cache Exercise
+
+3) CNAME Record Exercise
 
 
 <h2>Deployment and Configuration Steps</h2>
 
-<h4>1. </h4>
+<h4>1. A-Record Exercise</h4>
 <p>
-<img src=""/>
+<img src="https://github.com/BrianRivera22/DNS_Intuition/blob/main/Building%20DNS%20Intuition/1.png"/>
 </p>
 <p>
-word
+Log into client-1 as jane_admin and ping "mainframe" within PowerShell.
+
+Notice that the request cannot be completed. Type "nslookup mainframe" and notice that the DNS cannot resolve this name to an IP address.
+
+<p>
+<img src="https://github.com/BrianRivera22/DNS_Intuition/blob/main/Building%20DNS%20Intuition/2.png"/>
+</p>
+<p>
+Within dc-1 login as jane_admin and open up DNS Manager. Navigate to mydomain.com and right click to create a New Host A-Record
+
+Type in "mainframe" and have the record resolve it to the domain controller server's IP address. I used command ipconfig in PowerShell to find the IP address.
+
+<p>
+<img src="https://github.com/BrianRivera22/DNS_Intuition/blob/main/Building%20DNS%20Intuition/3.png"/>
+</p>
+<p>
+In PowerShell if we ping "mainframe" we will notice the IP address that it pings.
+
+<h4>2) Local DNS Cache Exercise</h4>
+<p>
+<img src="https://github.com/BrianRivera22/DNS_Intuition/blob/main/Building%20DNS%20Intuition/4.png"/>
+</p>
+<p>
+Back within DNS manager, change the IP address to 8.8.8.8
+
+<p>
+<img src="https://github.com/BrianRivera22/DNS_Intuition/blob/main/Building%20DNS%20Intuition/5.png"/>
+</p>
+<p>
+Ping "mainframe" again in PowerShell and notice that it still pings 10.0.0.4
+
+This is due to the DNS cache still having mainframe as 10.0.0.4
+
+<p>
+<img src="https://github.com/BrianRivera22/DNS_Intuition/blob/main/Building%20DNS%20Intuition/6.png"/>
+</p>
+<p>
+In PowerShell type "ipconfig /displaydns" to see the DNS cache still has 10.0.0.4 for mainframe
+
+<p>
+<img src="https://github.com/BrianRivera22/DNS_Intuition/blob/main/Building%20DNS%20Intuition/7.png"/>
+</p>
+<p>
+Type "ipconfig /flushdns" and then "ipconfig /dnsdisplay". This will let us see the emptied DNS cache.
+
+<h4>3) CNAME Record Exercise</h4>
+<p>
+<img src="https://github.com/BrianRivera22/DNS_Intuition/blob/main/Building%20DNS%20Intuition/8.png"/>
+</p>
+<p>
+Within DNS manager add a new CNAME. Use "search" and link it to google.com
+
+<p>
+<img src="https://github.com/BrianRivera22/DNS_Intuition/blob/main/Building%20DNS%20Intuition/9.png"/>
+</p>
+<p>
+Within PowerShell enter "nslookup search" and notice that it looks up google.com's IP address.
+
+This concludes the tutorial!
 
