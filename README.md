@@ -3,7 +3,7 @@
 </p>
 
 <h1>Building Domain Name System Intuition in Active Directory</h1>
-This tutorial will help build general intuition and understanding of how Domain Name Systems (DNS) work in the Active Directory Environment<br />
+This tutorial will help build general intuition and understanding of how Domain Name Systems (DNS) works in the Active Directory Environment<br />
 
 <h2>Prerequisites</h2>
 Configure an on-premises Active Directory within Azure VMs using my previous project as a reference --> https://github.com/BrianRivera22/configure_AD/blob/main/README.md
